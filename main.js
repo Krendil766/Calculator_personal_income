@@ -32,6 +32,7 @@ const inputs = document.querySelectorAll('.input');
 for (input of inputs) {
     input.addEventListener('input', () => {
         countingAvaibleMoney();
+        calculationPrecents();
     })
 }
 
@@ -39,7 +40,7 @@ monyeBoxRange.addEventListener('input', e => {
 
     totalPrecents = e.target.value;
     totalPrecentEl.innerHTML = totalPrecents;
-    calculationPrecents()
+    calculationPrecents();
 })
 
 const strToNum = str => str.value ? parseInt(str.value) : 0;
@@ -47,13 +48,19 @@ const strToNum = str => str.value ? parseInt(str.value) : 0;
 const calculationPrecents = () => {
     accumulation = ((totalMonth * totalPrecents) / 100).toFixed(1);
     accumulationInput.value = accumulation;
+
     spendInput.value = totalMonth - accumulation;
+
     totalDay = (spendInput.value / 30).toFixed(1);
     totalDayInput.value = totalDay;
-    totalYear = accumulation * 12;
+
+    totalYear = (accumulation * 12).toFixed(1);
     totalYearInput.value = totalYear;
+
+    disabledRange();
 }
 const countingAvaibleMoney = () => {
+
     const totalPerMonth = strToNum(incomeSalary) + strToNum(incomeFreelance) + strToNum(incomeExtra1) + strToNum(incomeExtra2);
     const totalCosts = strToNum(costsFlat) + strToNum(costsHouseServices) + strToNum(costsTransport) + strToNum(costsCredit);
     totalMonth = totalPerMonth - totalCosts;
@@ -64,6 +71,6 @@ const disabledRange = function() {
     if (totalMonth == undefined) {
         monyeBoxRange.disabled = true;
     } else {
-        monyeBoxRange.disabled = true;
+        monyeBoxRange.disabled = false;
     }
 }
